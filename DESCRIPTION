@@ -1,0 +1,16 @@
+Package: MS
+Type: Package
+Title: A Mixture Scan Statistic for Semi-continuous Data with
+        Covariates and Spatial Correlation.
+Version: 0.1.0
+Author: Pei-Sheng Lin  <pslin@nhri.edu.tw>
+Maintainer: Pei-Sheng Lin  <pslin@nhri.edu.tw>
+Description: A mixture scan statistic that is associated with the two-part and cluster models is developed to identify geographic clusters for spatial data with covariates and excessive zeros.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: dplyr, ggplot2, gstat, sf, spdep
+RoxygenNote: 7.3.2
+Depends: R (>= 3.5)
+NeedsCompilation: no
+Packaged: 2025-03-12 07:59:20 UTC; User
