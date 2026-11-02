@@ -20,10 +20,10 @@ To address these issues, a **mixture scan statistic** that is associated with tw
 
 ## 📁 Package Structure
 
-```
+```text
 MS/
 ├── R/             # Core functions (identification, candidate, regroup, MEE, clusters_plot)
-├── data/          # Example datasets and study region spatial data
+├── data/          # Example datasets (data.rda) and study region spatial data
 ├── man/           # Documentation files (.Rd)
 ├── DESCRIPTION    # Package metadata and dependencies
 └── NAMESPACE      # Exported functions and imported packages
@@ -31,49 +31,54 @@ MS/
 
 ## 📦 Installation
 
-You can install the development version of `MS` directly from GitHub using `remotes` or `devtools`:
+### Install from GitHub
+You can install the development version of `MS` directly from GitHub using `remotes`:
 
 ```R
-# Install remotes if you haven't already
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
 
-# Install the MS package from GitHub
 remotes::install_github("Thomas11411/spatial-clustering-detection")
+```
+
+### Install Local Source Package (`.tar.gz`)
+If you have the source package file locally:
+
+```R
+install.packages("path/to/MS_0.1.0.tar.gz", repos = NULL, type = "source")
 ```
 
 ## 🚀 Quick Start / Usage Example
 
-The primary function of this package is `identification()`, which accepts response counts, covariates, and spatial polygons (`sf`) to detect significant spatial clusters.
+Below is the standard execution workflow using the `MS` package to identify spatial clusters:
 
 ```R
-library(MS)
-library(sf)
+library(MS) # Mixture Scan Statistics
 
-# 1. Load your spatial polygon data (study region) and response variables
-# Example: study_region is an `sf` polygon object containing spatial features
-data("study_region_example") 
+# 1. Load your dataset and study region polygon
+# Load spatial dataset containing `response` and `covariate`
+load("data.rda") 
 
-# Define response vector and matrix of covariates
-y_response <- study_region_example$disease_cases
-X_covariates <- as.matrix(study_region_example[, c("temp", "humidity", "rainfall")])
+# 2. Run Spatial Cluster Identification with Execution Timing
+t0 <- Sys.time()
 
-# 2. Run Spatial Cluster Identification
-results <- identification(
-  response = y_response,
-  covariate = X_covariates,
-  study.region = study_region_example,
-  max.dist = 10,       # Maximum distance threshold (in km)
-  cutoff = 0.05        # Significance cutoff point for model fitting
+fit <- identification(
+  response = data$response,
+  covariate = data$covariate,
+  study.region = study.region,
+  max.dist = 0.75,
+  cutoff = 0.5
 )
 
-# 3. View Results & Plot Spatial Clusters
-# Summary of final model fit
-print(results)
+t1 <- Sys.time()
 
-# Display the cluster visualization map
-print(results$clust.plot)
+# Check computation duration
+print(t1 - t0)
+
+# 3. View Detection Results & Visualization Plot
+print(fit)
+print(fit$clust.plot)
 ```
 
 ## 📄 Citation & License
